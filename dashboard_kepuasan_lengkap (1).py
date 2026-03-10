@@ -58,7 +58,7 @@ nilai_gaya = [visual, auditori, kinestetik]
 grafik_garis(
     label_gaya,
     nilai_gaya,
-    "Kecenderungan Gaya Belajar Peserta Didik",
+    "Grafik Kecenderungan Gaya Belajar Peserta Didik",
     "Tipe Gaya Belajar"
 )
 
@@ -124,3 +124,4 @@ grafik_garis(
 st.header("📄 Data Hasil Angket")
 
 st.dataframe(df)
+
