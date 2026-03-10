@@ -63,7 +63,7 @@ grafik_garis(
 )
 
 # =====================================================
-# 2 MINAT DAN MOTIVASI BELAJAR
+# 2 MINAT DAN MOTIVASI
 # =====================================================
 st.header("2️⃣ Minat dan Motivasi Belajar")
 
@@ -86,22 +86,36 @@ nilai_motivasi = [
 grafik_garis(
     label_motivasi,
     nilai_motivasi,
-    "Grafik Kecenderungan Minat dan Motivasi Belajar",
+    "Kecenderungan Minat dan Motivasi Belajar",
     "Aspek Motivasi"
 )
 
 # =====================================================
-# 3 KESULITAN BELAJAR
+# 3 KESULITAN DAN HAMBATAN BELAJAR
 # =====================================================
 st.header("3️⃣ Kesulitan dan Hambatan Belajar")
 
-kesulitan = df.filter(regex="KHB").mean()
+bahasa_materi = df[["KHB1"]].mean().mean()
+mental_fokus = df[["KHB2","KHB3"]].mean().mean()
+fasilitas = df[["KHB4","KHB5"]].mean().mean()
+
+label_kesulitan = [
+    "Bahasa dan Materi",
+    "Mental dan Fokus",
+    "Keterbatasan Fasilitas"
+]
+
+nilai_kesulitan = [
+    bahasa_materi,
+    mental_fokus,
+    fasilitas
+]
 
 grafik_garis(
-    kesulitan.index.tolist(),
-    kesulitan.values.tolist(),
-    "Kecenderungan Kesulitan Belajar",
-    "Indikator Kesulitan"
+    label_kesulitan,
+    nilai_kesulitan,
+    "Grafik Kecenderungan Kesulitan dan Hambatan Belajar Siswa",
+    "Aspek Kesulitan"
 )
 
 # =====================================================
@@ -124,4 +138,3 @@ grafik_garis(
 st.header("📄 Data Hasil Angket")
 
 st.dataframe(df)
-
