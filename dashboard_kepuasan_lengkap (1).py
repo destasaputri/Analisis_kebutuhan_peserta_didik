@@ -19,57 +19,22 @@ st.write("Visualisasi hasil angket kebutuhan belajar siswa")
 df = pd.read_excel("Analisis Kebutuhan Peserta Didik.xlsx")
 
 # =====================================================
-# GRAFIK GAYA BELAJAR
+# FUNGSI MEMBUAT GRAFIK
 # =====================================================
-st.header("1️⃣ Gaya Belajar Peserta Didik")
-
-visual = df[["GB1","GB2","GB5"]].mean().mean()
-auditori = df[["GB3","GB6"]].mean().mean()
-kinestetik = df[["GB4","GB7"]].mean().mean()
-
-kategori_gaya = ["Visual","Auditori","Kinestetik"]
-nilai_gaya = [visual, auditori, kinestetik]
-
-fig1, ax1 = plt.subplots(figsize=(8,5))
-
-ax1.plot(kategori_gaya, nilai_gaya, marker='o', linewidth=2)
-
-ax1.set_ylim(0, max(nilai_gaya)+0.5)
-
-for i,v in enumerate(nilai_gaya):
-    ax1.text(i, v+0.05, f"{v:.2f}", ha='center')
-
-ax1.set_title("Kecenderungan Gaya Belajar")
-ax1.set_ylabel("Rata-rata Skor")
-ax1.set_xlabel("Tipe Gaya Belajar")
-
-ax1.grid(True)
-ax1.spines[['top','right']].set_visible(False)
-
-plt.tight_layout()
-
-st.pyplot(fig1)
-
-# =====================================================
-# FUNGSI GRAFIK
-# =====================================================
-def line_chart(data, judul):
-
-    mean_values = data.mean()
+def grafik_garis(label, nilai, judul, xlabel):
 
     fig, ax = plt.subplots(figsize=(8,5))
 
-    ax.plot(mean_values.index, mean_values.values,
-            marker='o', linewidth=2)
+    ax.plot(label, nilai, marker='o', linewidth=2)
 
-    ax.set_ylim(0, mean_values.max()+0.5)
+    ax.set_ylim(0, max(nilai)+0.5)
 
-    for i,v in enumerate(mean_values.values):
+    for i,v in enumerate(nilai):
         ax.text(i, v+0.05, f"{v:.2f}", ha='center')
 
     ax.set_title(judul)
     ax.set_ylabel("Rata-rata Skor")
-    ax.set_xlabel("Indikator")
+    ax.set_xlabel(xlabel)
 
     ax.grid(True)
     ax.spines[['top','right']].set_visible(False)
@@ -79,31 +44,79 @@ def line_chart(data, judul):
     st.pyplot(fig)
 
 # =====================================================
-# MINAT DAN MOTIVASI
+# 1 GAYA BELAJAR
+# =====================================================
+st.header("1️⃣ Gaya Belajar Peserta Didik")
+
+visual = df[["GB1","GB2","GB5"]].mean().mean()
+auditori = df[["GB3","GB6"]].mean().mean()
+kinestetik = df[["GB4","GB7"]].mean().mean()
+
+label_gaya = ["Visual","Auditori","Kinestetik"]
+nilai_gaya = [visual, auditori, kinestetik]
+
+grafik_garis(
+    label_gaya,
+    nilai_gaya,
+    "Kecenderungan Gaya Belajar Peserta Didik",
+    "Tipe Gaya Belajar"
+)
+
+# =====================================================
+# 2 MINAT DAN MOTIVASI
 # =====================================================
 st.header("2️⃣ Minat dan Motivasi Belajar")
 
-minat = df.filter(regex="MMB")
+orientasi_nilai = df[["MMB1"]].mean().mean()
+minat_intrinsik = df[["MMB2"]].mean().mean()
+kemandirian = df[["MMB3","MMB4","MMB5"]].mean().mean()
 
-line_chart(minat, "Kecenderungan Minat dan Motivasi")
+label_mmb = [
+    "Orientasi Nilai",
+    "Minat Intrinsik",
+    "Kemandirian Belajar"
+]
+
+nilai_mmb = [
+    orientasi_nilai,
+    minat_intrinsik,
+    kemandirian
+]
+
+grafik_garis(
+    label_mmb,
+    nilai_mmb,
+    "Kecenderungan Minat dan Motivasi Belajar",
+    "Aspek Motivasi"
+)
 
 # =====================================================
-# KESULITAN BELAJAR
+# 3 KESULITAN BELAJAR
 # =====================================================
 st.header("3️⃣ Kesulitan dan Hambatan Belajar")
 
-kesulitan = df.filter(regex="KHB")
+kesulitan = df.filter(regex="KHB").mean()
 
-line_chart(kesulitan, "Kecenderungan Kesulitan Belajar")
+grafik_garis(
+    kesulitan.index.tolist(),
+    kesulitan.values.tolist(),
+    "Kecenderungan Kesulitan Belajar",
+    "Indikator Kesulitan"
+)
 
 # =====================================================
-# HARAPAN PESERTA DIDIK
+# 4 HARAPAN PESERTA DIDIK
 # =====================================================
 st.header("4️⃣ Harapan Peserta Didik")
 
-harapan = df.filter(regex="HPD")
+harapan = df.filter(regex="HPD").mean()
 
-line_chart(harapan, "Kecenderungan Harapan Peserta Didik")
+grafik_garis(
+    harapan.index.tolist(),
+    harapan.values.tolist(),
+    "Kecenderungan Harapan Peserta Didik",
+    "Indikator Harapan"
+)
 
 # =====================================================
 # TAMPILKAN DATA
