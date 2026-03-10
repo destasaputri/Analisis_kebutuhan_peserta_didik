@@ -58,34 +58,34 @@ nilai_gaya = [visual, auditori, kinestetik]
 grafik_garis(
     label_gaya,
     nilai_gaya,
-    "Grafik Kecenderungan Gaya Belajar Peserta Didik",
+    "Kecenderungan Gaya Belajar Peserta Didik",
     "Tipe Gaya Belajar"
 )
 
 # =====================================================
-# 2 MINAT DAN MOTIVASI
+# 2 MINAT DAN MOTIVASI BELAJAR
 # =====================================================
 st.header("2️⃣ Minat dan Motivasi Belajar")
 
-orientasi_nilai = df[["MMB1"]].mean().mean()
-minat_intrinsik = df[["MMB2"]].mean().mean()
-kemandirian = df[["MMB3","MMB4","MMB5"]].mean().mean()
+motivasi_ekstrinsik = df[["MMB1"]].mean().mean()
+minat = df[["MMB2"]].mean().mean()
+motivasi_intrinsik = df[["MMB3","MMB4","MMB5"]].mean().mean()
 
-label_mmb = [
-    "Orientasi Nilai",
-    "Minat Intrinsik",
-    "Kemandirian Belajar"
+label_motivasi = [
+    "Minat",
+    "Motivasi Intrinsik",
+    "Motivasi Ekstrinsik"
 ]
 
-nilai_mmb = [
-    orientasi_nilai,
-    minat_intrinsik,
-    kemandirian
+nilai_motivasi = [
+    minat,
+    motivasi_intrinsik,
+    motivasi_ekstrinsik
 ]
 
 grafik_garis(
-    label_mmb,
-    nilai_mmb,
+    label_motivasi,
+    nilai_motivasi,
     "Kecenderungan Minat dan Motivasi Belajar",
     "Aspek Motivasi"
 )
@@ -124,4 +124,3 @@ grafik_garis(
 st.header("📄 Data Hasil Angket")
 
 st.dataframe(df)
-
