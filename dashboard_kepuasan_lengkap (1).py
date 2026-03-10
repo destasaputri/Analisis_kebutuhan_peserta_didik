@@ -114,7 +114,7 @@ nilai_kesulitan = [
 grafik_garis(
     label_kesulitan,
     nilai_kesulitan,
-    "Kecenderungan Kesulitan dan Hambatan Belajar",
+    "Grafik Kecenderungan Kesulitan dan Hambatan Belajar",
     "Aspek Kesulitan"
 )
 
@@ -152,3 +152,4 @@ grafik_garis(
 st.header("📄 Data Hasil Angket")
 
 st.dataframe(df)
+
