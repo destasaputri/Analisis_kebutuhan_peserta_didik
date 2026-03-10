@@ -1,94 +1,35 @@
-import streamlit as st
-import pandas as pd
-import matplotlib.pyplot as plt
-
-# =====================================================
-# KONFIGURASI HALAMAN
-# =====================================================
-st.set_page_config(
-    page_title="Dashboard Analisis Kebutuhan Peserta Didik",
-    layout="wide"
-)
-
-st.title("📊 Dashboard Analisis Kebutuhan Peserta Didik")
-st.write("Visualisasi hasil angket kebutuhan belajar siswa")
-
-# =====================================================
-# LOAD DATA
-# =====================================================
-df = pd.read_excel("Analisis Kebutuhan Peserta Didik.xlsx")
-
-# =====================================================
-# FUNGSI MEMBUAT DIAGRAM GARIS
-# =====================================================
-def line_chart(data, judul):
-
-    mean_values = data.mean()
-
-    fig, ax = plt.subplots(figsize=(8,5))
-
-    ax.plot(mean_values.index, mean_values.values,
-            marker='o', linewidth=2)
-
-    # batas atas grafik supaya label tidak keluar
-    ax.set_ylim(0, mean_values.max() + 0.5)
-
-    # menampilkan angka di titik
-    for i, v in enumerate(mean_values.values):
-        ax.text(i, v + 0.05, f"{v:.2f}", ha='center')
-
-    ax.set_title(judul)
-    ax.set_ylabel("Rata-rata Skor")
-    ax.set_xlabel("Indikator")
-
-    ax.grid(True)
-
-    # membuat grafik lebih clean
-    ax.spines[['top','right']].set_visible(False)
-
-    plt.tight_layout()
-
-    st.pyplot(fig)
-
 # =====================================================
 # GAYA BELAJAR
 # =====================================================
 st.header("1️⃣ Gaya Belajar Peserta Didik")
 
-gaya_belajar = df.filter(regex="GB")
+# Hitung rata-rata berdasarkan tipe gaya belajar
+visual = df[["GB1","GB2","GB5"]].mean().mean()
+auditori = df[["GB3","GB6"]].mean().mean()
+kinestetik = df[["GB4","GB7"]].mean().mean()
 
-line_chart(gaya_belajar, "Kecenderungan Gaya Belajar")
+kategori_gaya = ["Visual","Auditori","Kinestetik"]
+nilai_gaya = [visual, auditori, kinestetik]
 
-# =====================================================
-# MINAT DAN MOTIVASI BELAJAR
-# =====================================================
-st.header("2️⃣ Minat dan Motivasi Belajar")
+fig, ax = plt.subplots(figsize=(8,5))
 
-minat_motivasi = df.filter(regex="MMB")
+ax.plot(kategori_gaya, nilai_gaya, marker='o', linewidth=2)
 
-line_chart(minat_motivasi, "Kecenderungan Minat dan Motivasi")
+# batas atas grafik
+ax.set_ylim(0, max(nilai_gaya)+0.5)
 
-# =====================================================
-# KESULITAN BELAJAR
-# =====================================================
-st.header("3️⃣ Kesulitan dan Hambatan Belajar")
+# tampilkan nilai
+for i,v in enumerate(nilai_gaya):
+    ax.text(i, v+0.05, f"{v:.2f}", ha='center')
 
-kesulitan = df.filter(regex="KHB")
+ax.set_title("Kecenderungan Gaya Belajar Peserta Didik")
+ax.set_ylabel("Rata-rata Skor")
+ax.set_xlabel("Tipe Gaya Belajar")
 
-line_chart(kesulitan, "Kecenderungan Kesulitan Belajar")
+ax.grid(True)
 
-# =====================================================
-# HARAPAN PESERTA DIDIK
-# =====================================================
-st.header("4️⃣ Harapan Peserta Didik")
+ax.spines[['top','right']].set_visible(False)
 
-harapan = df.filter(regex="HPD")
+plt.tight_layout()
 
-line_chart(harapan, "Kecenderungan Harapan Peserta Didik")
-
-# =====================================================
-# TAMPILKAN DATA
-# =====================================================
-st.header("📄 Data Hasil Angket")
-
-st.dataframe(df)
+st.pyplot(fig)
