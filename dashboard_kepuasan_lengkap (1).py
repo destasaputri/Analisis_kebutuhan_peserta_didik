@@ -63,7 +63,7 @@ grafik_garis(
 )
 
 # =====================================================
-# 2 MINAT DAN MOTIVASI
+# 2 MINAT DAN MOTIVASI BELAJAR
 # =====================================================
 st.header("2️⃣ Minat dan Motivasi Belajar")
 
@@ -114,7 +114,7 @@ nilai_kesulitan = [
 grafik_garis(
     label_kesulitan,
     nilai_kesulitan,
-    "Grafik Kecenderungan Kesulitan dan Hambatan Belajar Siswa",
+    "Kecenderungan Kesulitan dan Hambatan Belajar",
     "Aspek Kesulitan"
 )
 
@@ -123,13 +123,27 @@ grafik_garis(
 # =====================================================
 st.header("4️⃣ Harapan Peserta Didik")
 
-harapan = df.filter(regex="HPD").mean()
+variasi_metode = df[["HPD1"]].mean().mean()
+keaktifan = df[["HPD2"]].mean().mean()
+tugas_kontekstual = df[["HPD3"]].mean().mean()
+
+label_harapan = [
+    "Variasi Metode Belajar",
+    "Keaktifan Siswa",
+    "Tugas yang Kontekstual"
+]
+
+nilai_harapan = [
+    variasi_metode,
+    keaktifan,
+    tugas_kontekstual
+]
 
 grafik_garis(
-    harapan.index.tolist(),
-    harapan.values.tolist(),
-    "Kecenderungan Harapan Peserta Didik",
-    "Indikator Harapan"
+    label_harapan,
+    nilai_harapan,
+    "Harapan Peserta Didik terhadap Pembelajaran",
+    "Aspek Harapan"
 )
 
 # =====================================================
