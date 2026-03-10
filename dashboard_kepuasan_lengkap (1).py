@@ -86,7 +86,7 @@ nilai_motivasi = [
 grafik_garis(
     label_motivasi,
     nilai_motivasi,
-    "Kecenderungan Minat dan Motivasi Belajar",
+    "Grafik Kecenderungan Minat dan Motivasi Belajar",
     "Aspek Motivasi"
 )
 
@@ -124,3 +124,4 @@ grafik_garis(
 st.header("📄 Data Hasil Angket")
 
 st.dataframe(df)
+
